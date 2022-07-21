@@ -1,5 +1,5 @@
 import React from 'react';
-import {Circles,Audio,BallTriangle,Hearts,ThreeDots,TailSpin,Puff,Oval,Rings,Grid} from "react-loader-spinner";
+import {BallTriangle} from "react-loader-spinner";
 
 const Spinner = ({message}) => {
   return (
