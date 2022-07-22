@@ -6,6 +6,7 @@ import { MdDelete } from 'react-icons/md';
 import { categories } from '../utils/data';
 import { client } from '../client';
 import Spinner from './Spinner';
+
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -98,7 +99,10 @@ const CreatePin = ({ user }) => {
 
     } else {
       setFields(true);
-
+      MySwal.fire({
+        title:"Please add all the fields.",
+        icon:"warning"
+      })
       setTimeout(() => setFields(false), 2000)
     }
   };
@@ -188,7 +192,7 @@ const CreatePin = ({ user }) => {
             type="url"
             vlaue={destination}
             onChange={(e) => setDestination(e.target.value)}
-            placeholder="Add a destination link"
+            placeholder="Add a destination link (optional)"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
 

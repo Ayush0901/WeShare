@@ -6,10 +6,10 @@ import { GoogleLogin } from '@react-oauth/google';
 import { client } from '../client';
 import jwt_decode from "jwt-decode";
 import logo2 from "../assets/logo2.png"
-import { Surface } from 'react-glass-components/components';
 import Footer from './Footer';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+
 
 
 const Login = () => {
@@ -85,6 +85,8 @@ const Login = () => {
               />
             </GoogleOAuthProvider>
           </div>
+          
+          
           <Footer />
         </div>
       </div>

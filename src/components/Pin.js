@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { MdDownloadForOffline } from 'react-icons/md';
@@ -13,6 +13,11 @@ import { AiTwotoneHeart, AiOutlineEllipsis } from 'react-icons/ai';
 import { IconContext } from "react-icons";
 
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart} from '@fortawesome/free-solid-svg-icons'
+
+
+
 const Pin = ({ pin }) => {
   const MySwal = withReactContent(Swal)
 
@@ -24,6 +29,7 @@ const Pin = ({ pin }) => {
   const { postedBy, image, _id, destination } = pin;
 
   const user = fetchUser();
+
   const deletePin = (id) => {
     MySwal.fire({
       title: 'Are you sure?',
@@ -108,11 +114,11 @@ const Pin = ({ pin }) => {
               </a>
             </div>
             {alreadySaved?.length !== 0 ? (
-              <button type="button" className="bg-red-400 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none">
-                {pin?.save?.length}  
-                <IconContext.Provider value={{ color: "#F32424", className: "global-class-name" ,size:"20px"}}>
+              <button type="button" className=" opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-2xl rounded-3xl  outline-none">
+                {pin?.save?.length} <FontAwesomeIcon icon={faHeart} size="lg" className='text-red-500'/>
+                {/* <IconContext.Provider value={{ color: "#F32424", className: "global-class-name" ,size:"20px"}}>
                   <AiTwotoneHeart />
-                </IconContext.Provider>
+                </IconContext.Provider> */}
               </button>
             ) : (
               <button
@@ -121,9 +127,9 @@ const Pin = ({ pin }) => {
                   savePin(_id);
                 }}
                 type="button"
-                className="bg-red-400 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                className=" opacity-90 hover:opacity-100 text-white font-bold px-5 py-1 rounded-3xl  outline-none"
               >
-                {pin?.save?.length}   {savingPost ? <AiOutlineEllipsis /> : <AiTwotoneHeart />}
+                {pin?.save?.length}   {savingPost ? <AiOutlineEllipsis className='text-xl text-stone-200'/> : <FontAwesomeIcon icon={faHeart} className='text-3xl text-white ' />}
               </button>
             )}
           </div>
