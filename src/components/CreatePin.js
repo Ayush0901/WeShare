@@ -78,7 +78,10 @@ const CreatePin = ({ user }) => {
           });
         },
       }).then(() => {
-        return MySwal.fire({
+        setTimeout(function(){
+          window.location.reload();
+       }, 5000);
+         MySwal.fire({
           title: 'Yay! pin created successfully',
           footer: "It may take few seconds to load your pin.",
           width: 600,
@@ -89,8 +92,7 @@ const CreatePin = ({ user }) => {
             rgba(255,0,0,0.3);
             url("../assets/logo3.png")
             left top
-            no-repeat
-          `
+            no-repeat`
         })
       })
 

@@ -7,6 +7,10 @@
       font-family: 'Lato', sans-serif;
     }
   }
+
+  @media (hover: none) {
+    
+  }
   
   /* Hide scrollbar for Chrome, Safari and Opera */
   .hide-scrollbar::-webkit-scrollbar {
