@@ -8,11 +8,15 @@ import { client } from '../client';
 import MasonryLayout from './MasonryLayout';
 import Spinner from './Spinner';
 import { fetchUser } from '../utils/fetchUser';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const activeBtnStyles = 'bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none';
 const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
 
 const UserProfile = () => {
+  const MySwal = withReactContent(Swal)
+
   const [user, setUser] = useState();
   const [pins, setPins] = useState();
   const [text, setText] = useState('Created');
@@ -47,6 +51,11 @@ const UserProfile = () => {
   const logout = () => {
     localStorage.clear();
     navigate('/login');
+    MySwal.fire({
+      title: "Logged Out",
+      icon: "success",
+      footer:"We'll miss you."
+    })
   };
 
   if (!user) return <Spinner message="Loading profile" />;

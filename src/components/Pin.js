@@ -9,7 +9,6 @@ import { client, urlFor } from '../client';
 import { fetchUser } from '../utils/fetchUser';
 
 const Pin = ({ pin }) => {
-  const [touchDevice, setTouchDevice] = useState(false)
   const [postHovered, setPostHovered] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
 
@@ -17,13 +16,17 @@ const Pin = ({ pin }) => {
 
   const { postedBy, image, _id, destination } = pin;
 
-  function isTouchDevice() {
-    return (('ontouchstart' in window) ||
-       (navigator.maxTouchPoints > 0) ||
-       (navigator.msMaxTouchPoints > 0));
-       setTouchDevice(true)
+  
+  function screenCheck(){
+    var deviceAgent = navigator.userAgent.toLowerCase();
+    var agentID = deviceAgent.match(/(iphone|ipad|ipod)/);
+    if (agentID || (window.width()) <= 1024) {
+      return setPostHovered(true)
+    }
+    else{
+      return setPostHovered(false)
+    }
   }
-  isTouchDevice()
 
   const user = fetchUser();
   const deletePin = (id) => {
@@ -71,7 +74,7 @@ const Pin = ({ pin }) => {
       >
           {image && (
         <img className="rounded-lg w-full " src={(urlFor(image).width(250).url())} alt="user-post" /> )}
-        {postHovered || touchDevice && (
+        {postHovered && (
           <div
             className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50"
             style={{ height: '100%' }}
