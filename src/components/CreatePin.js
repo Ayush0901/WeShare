@@ -44,9 +44,9 @@ const CreatePin = ({ user }) => {
   };
 
   const savePin = () => {
-    
+
     const MySwal = withReactContent(Swal)
-    if (title && about && destination && imageAsset?._id && category) {
+    if (title && about && imageAsset?._id && category) {
       const doc = {
         _type: 'pin',
         title,
@@ -75,19 +75,19 @@ const CreatePin = ({ user }) => {
           MySwal.showLoading()
           client.create(doc).then(() => {
             navigate('/');
-            window.location.reload();
           });
         },
       }).then(() => {
         return MySwal.fire({
           title: 'Yay! pin created successfully',
+          footer: "It may take few seconds to load your pin.",
           width: 600,
           padding: '3em',
           color: '#716add',
           background: '#fff url(/images/trees.png)',
           backdrop: `
-            rgba(0,0,123,0.4)
-            url("/images/nyan-cat.gif")
+            rgba(255,0,0,0.3);
+            url("../assets/logo3.png")
             left top
             no-repeat
           `
@@ -97,7 +97,7 @@ const CreatePin = ({ user }) => {
     } else {
       setFields(true);
 
-      setTimeout(() => setFields(false),2000)
+      setTimeout(() => setFields(false), 2000)
     }
   };
   return (

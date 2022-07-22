@@ -3,6 +3,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        'betterhover': {'raw': '(hover: hover)'},
+    },
       margin: {
         320: '320px',
       },
