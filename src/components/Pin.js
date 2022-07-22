@@ -23,6 +23,7 @@ const Pin = ({ pin }) => {
        (navigator.msMaxTouchPoints > 0));
        setTouchDevice(true)
   }
+  isTouchDevice()
 
   const user = fetchUser();
   const deletePin = (id) => {
