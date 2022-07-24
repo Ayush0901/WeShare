@@ -12,41 +12,49 @@ import withReactContent from 'sweetalert2-react-content'
 
 
 const CreatePin = ({ user }) => {
+  const MySwal = withReactContent(Swal)
+
   const [title, setTitle] = useState('');
   const [about, setAbout] = useState('');
   const [loading, setLoading] = useState(false);
-  const [destination, setDestination] = useState();
-  const [fields, setFields] = useState();
-  const [category, setCategory] = useState();
-  const [imageAsset, setImageAsset] = useState();
+  const [destination, setDestination] = useState("");
+  const [fields, setFields] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [imageAsset, setImageAsset] = useState(null);
   const [wrongImageType, setWrongImageType] = useState(false);
 
   const navigate = useNavigate();
 
   const uploadImage = (e) => {
-    const selectedFile = e.target.files[0];
+    const {type, name} = e.target.files[0];
     // uploading asset to sanity
-    if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff') {
+    if (type === 'image/png' ||type === 'image/svg' || type === 'image/jpeg' || type==="image/jpg" || type === 'image/gif' || type === 'image/tiff') {
       setWrongImageType(false);
       setLoading(true);
       client.assets
-        .upload('image', selectedFile, { contentType: selectedFile.type, filename: selectedFile.name })
+        .upload('image', e.target.files[0], { contentType: type, filename: name })
         .then((document) => {
           setImageAsset(document);
           setLoading(false);
         })
         .catch((error) => {
+          MySwal.fire({
+            title:"Oops! Something went wrong.",
+            icon:"warning"
+          })
           console.log('Upload failed:', error.message);
         });
     } else {
-      setLoading(false);
       setWrongImageType(true);
+      MySwal.fire({
+        title:"Wrong file type!",
+        icon:"error"
+      })
     }
   };
 
   const savePin = () => {
 
-    const MySwal = withReactContent(Swal)
     if (title && about && imageAsset?._id && category) {
       const doc = {
         _type: 'pin',
@@ -79,16 +87,13 @@ const CreatePin = ({ user }) => {
           });
         },
       }).then(() => {
-        setTimeout(function(){
-          window.location.reload();
-       }, 5000);
+        
          MySwal.fire({
-          title: 'Yay! pin created successfully',
-          footer: "It may take few seconds to load your pin.",
+          title: 'Yay! pin created successfully 🥳',
           width: 600,
           padding: '3em',
           color: '#716add',
-          background: '#fff url(/images/trees.png)',
+          background: '#fff url("")',
           backdrop: `
             rgba(255,0,0,0.3);
             url("../assets/logo3.png")
@@ -134,7 +139,7 @@ const CreatePin = ({ user }) => {
                   </div>
 
                   <p className="mt-32 text-gray-400">
-                    Recommendation: Use high-quality JPG, JPEG, SVG, PNG, GIF or TIFF less than 20MB
+                    Use high-quality JPG, JPEG, SVG, PNG, GIF less than 20MB
                   </p>
                 </div>
                 <input
@@ -185,7 +190,7 @@ const CreatePin = ({ user }) => {
             type="text"
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            placeholder="Tell everyone what your Pin is about"
+            placeholder="What is your pin about ?"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
           <input

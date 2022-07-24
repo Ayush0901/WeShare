@@ -9,8 +9,7 @@ import { client, urlFor } from '../client';
 import { fetchUser } from '../utils/fetchUser';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { AiTwotoneHeart, AiOutlineEllipsis } from 'react-icons/ai';
-import { IconContext } from "react-icons";
+import {  AiOutlineEllipsis } from 'react-icons/ai';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -18,15 +17,13 @@ import { faHeart} from '@fortawesome/free-solid-svg-icons'
 
 
 
-const Pin = ({ pin }) => {
+const Pin = ({ pin: {postedBy, image, _id, destination, save} }) => {
   const MySwal = withReactContent(Swal)
 
   // const [postHovered, setPostHovered] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
 
   const navigate = useNavigate();
-
-  const { postedBy, image, _id, destination } = pin;
 
   const user = fetchUser();
 
@@ -44,14 +41,14 @@ const Pin = ({ pin }) => {
         client
           .delete(id)
           .then(() => {
-            setTimeout(function () {
-              window.location.reload();
-            }, 5000);
             MySwal.fire(
               'Deleted!',
               'Your pin has been deleted.',
               'success'
             )
+            setTimeout(function () {
+              window.location.reload();
+            }, 2000);
           });
 
       }
@@ -60,12 +57,11 @@ const Pin = ({ pin }) => {
 
   };
 
-  let alreadySaved = pin?.save?.filter((item) => item?.postedBy?._id === user?.sub);
+  const alreadySaved = !!(save?.filter((item) => item.postedBy._id === user?.sub))?.length;
 
-  alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
   const savePin = (id) => {
-    if (alreadySaved?.length === 0) {
+    if (!alreadySaved) {
       setSavingPost(true);
 
       client
@@ -81,7 +77,7 @@ const Pin = ({ pin }) => {
         }])
         .commit()
         .then(() => {
-          window.location.reload();
+          window.location.reload()
           setSavingPost(false);
         });
     }
@@ -113,12 +109,9 @@ const Pin = ({ pin }) => {
               ><MdDownloadForOffline />
               </a>
             </div>
-            {alreadySaved?.length !== 0 ? (
-              <button type="button" className=" opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-2xl rounded-3xl  outline-none">
-                {pin?.save?.length} <FontAwesomeIcon icon={faHeart} size="lg" className='text-red-500'/>
-                {/* <IconContext.Provider value={{ color: "#F32424", className: "global-class-name" ,size:"20px"}}>
-                  <AiTwotoneHeart />
-                </IconContext.Provider> */}
+            {alreadySaved ? (
+              <button type="button" className=" text-white font-bold px-5 py-1 text-2xl rounded-3xl  outline-none">
+                {save?.length} <FontAwesomeIcon icon={faHeart} size="lg" className='text-red-500  opacity-70 hover:opacity-100'/>
               </button>
             ) : (
               <button
@@ -129,7 +122,7 @@ const Pin = ({ pin }) => {
                 type="button"
                 className=" opacity-90 hover:opacity-100 text-white font-bold px-5 py-1 rounded-3xl  outline-none"
               >
-                {pin?.save?.length}   {savingPost ? <AiOutlineEllipsis className='text-xl text-stone-200'/> : <FontAwesomeIcon icon={faHeart} className='text-3xl text-white ' />}
+                {save?.length}   {savingPost ? <AiOutlineEllipsis className='text-xl text-stone-200'/> : <FontAwesomeIcon icon={faHeart} className='text-3xl text-white ' />}
               </button>
             )}
           </div>

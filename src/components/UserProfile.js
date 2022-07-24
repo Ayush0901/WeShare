@@ -54,7 +54,7 @@ const UserProfile = () => {
     MySwal.fire({
       title: "Logged Out",
       icon: "success",
-      footer:"We'll miss you."
+      footer:"We'll miss you 🙄."
     })
   };
 

@@ -44,7 +44,7 @@ const Login = () => {
       },
     }).then(() => {
       return MySwal.fire({
-        title: <p>Logged in as {name}</p>,
+        title: <p>Logged in as {name} 😃</p>,
         icon: 'success'
       })
     })
@@ -66,8 +66,8 @@ const Login = () => {
         />
 
         <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col justify-center items-center     bg-blackOverlay">
-          <div className="p-5">
-            <img src={logo2} alt='logo' width="130px" />
+          <div className="flex p-5 items-center justify-center">
+            <img src={logo2} alt='logo'  className='w-2/4	'/>
           </div>
           <div className="shadow-2xl">
             <GoogleOAuthProvider

@@ -7,25 +7,24 @@ import MasonryLayout from './MasonryLayout';
 import Spinner from './Spinner';
 
 const Feed = () => {
-  const [pins, setPins] = useState();
+  const [pins, setPins] = useState(null);
   const [loading, setLoading] = useState(false);
   const { categoryId } = useParams();
 
   useEffect(() => {
     if (categoryId) {
-      setLoading(true);
       const query = searchQuery(categoryId);
-      client.fetch(query).then((data) => {
-        setPins(data);
-        setLoading(false);
-      });
+      client.fetch(query)
+        .then((data) => {
+          setPins(data);
+          setLoading(false);
+        });
     } else {
-      setLoading(true);
-
-      client.fetch(feedQuery).then((data) => {
-        setPins(data);
-        setLoading(false);
-      });
+      client.fetch(feedQuery)
+        .then((data) => {
+          setPins(data);
+          setLoading(false);
+        });
     }
   }, [categoryId]);
   const ideaName = categoryId || 'new';
@@ -34,7 +33,7 @@ const Feed = () => {
       <Spinner message={`We are adding ${ideaName} ideas to your feed!`} />
     );
   }
-  if(!pins?.length) return <h2 className="text-slate-500 text-xl">No pins available</h2>
+  if (!pins?.length) return <h2 className="text-slate-500 text-xl">No pins available</h2>
   return (
     <div>
       {pins && (

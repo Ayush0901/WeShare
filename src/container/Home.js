@@ -20,20 +20,21 @@ const Home = () => {
 
   useEffect(() => {
     const query = userQuery(userInfo?.sub);
-    console.log(query);
-    client.fetch(query).then((data) => {
+    // console.log(query);
+    client.fetch(query)
+      .then((data) => {
       setUser(data[0]);
     });
-  }, [userInfo?.sub]);
+  }, []);
 
   useEffect(() => {
     scrollRef.current.scrollTo(0, 0)
-  });
+  },[]);
 
   return (
     <div className="flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out">
        <div className="hidden md:flex h-screen flex-initial">
-        <Sidebar />
+        <Sidebar user={user && user}/>
       </div>
 
       <div className="flex md:hidden flex-row">
@@ -62,7 +63,7 @@ const Home = () => {
         </Routes>
       </div>
       </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
